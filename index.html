@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // check answers to questions
+            document.addEventListener("DOMContentLoaded", function() //browser defined name
+            { 
+                const buttons = document.querySelectorAll(".choice"); //node list. not just one node.
+                buttons.forEach(function(button) //add click listener for each button
+                { 
+                    button.addEventListener("click", function() 
+                    {
+                        const question = button.closest(".question"); // Find the Q containing this button
+                        const feedback = question.querySelector(".feedback"); // find the feedback area for this Q
+
+                        //if user if clicking multiple buttons, clear the previous status
+                        const choices = question.querySelectorAll(".choice");
+
+                        choices.forEach(
+                            function(choice)
+                            {
+                                choice.classList.remove("correct","incorrect");
+                            });
+
+                        if (button.dataset.correct === "true") //read data-correct。 HTML kebab to JS camel
+                        { 
+                            feedback.textContent = "Correct!";
+
+                            feedback.classList.remove("correct", "incorrect");
+                            feedback.classList.add("correct");
+
+                            button.classList.remove("correct", "incorrect");
+                            button.classList.add("correct");
+
+                        }
+                        else 
+                        {
+                            feedback.textContent = "Incorrect!";
+
+                            feedback.classList.remove("correct", "incorrect");
+                            feedback.classList.add("incorrect");
+
+                            button.classList.remove("correct", "incorrect");
+                            button.classList.add("incorrect");
+                        }
+                    });
+                });
+
+                const correctAnswer = "robin"; //saving correct answer for free response here
+                const answerInput = document.querySelector("#answer");
+                const submitButton = document.querySelector(".confirm");
+
+                submitButton.addEventListener("click", function() 
+                {
+                    const userAnswer = answerInput.value.trim().toLowerCase();
+                    const freeFeedback = document.querySelector("#free-feedback");
+                    
+                    freeFeedback.classList.remove("correct", "incorrect");
+
+                    if (userAnswer === correctAnswer) 
+                    {
+                        freeFeedback.textContent = "Correct!";
+                        freeFeedback.classList.add("correct");
+                    }
+                    else 
+                    {
+                        freeFeedback.textContent = "incorrect.";
+                        freeFeedback.classList.add("incorrect");
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Stardew Valley Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <section>
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- multiple choice question here -->
+                 <div class="question"> 
+                    <h3> 1. What do you inherit from your grandfather at the beginning of Stardew Valley? </h3>
+                   
+                    <div class="choices"> 
+                        <button class="choice"> A fishing boat </button>
+                        <button class="choice" data-correct="true"> A run-down farm </button>
+                        <button class="choice"> A mining facility </button>
+                    </div>
+                    
+                    <p class="feedback"></p>
+
+                </div>
+                
+                <div class="question"> 
+                    <h3> 2. How do you travel to the tropical locale of Ginger Island? </h3>
+                   
+                    <div class="choices"> 
+                        <button class="choice"> Humpback Whale </button>
+                        <button class="choice" data-correct="true"> Willy's Boat </button>
+                        <button class="choice"> Wizard's portal </button>
+                    </div>
+
+                    <p class="feedback"></p>
+                
+                </div>
+
+                <div class="question">
+                    <h3> 3. Which of these is NOT a benefit of increasing your friendship level with each of the inhabitants of Stardew Valley? </h3>
+                 
+                    <div class="choices"> 
+                        <button class="choice"> Learning new recipes </button>
+                        <button class="choice"> Receiving gifts </button>
+                        <button class="choice" data-correct="true"> Unlocking new emotes </button>
+                    </div>
+                
+                    <p class="feedback"></p>
+
+                </div>
+                </section>
+
+            <section>
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- free response question here -->
+                 <h3>
+                    Who lives here?
+                 </h3>
+                 <img src="400px-Carpenter's_Shop.png" alt="A house in Stardew Valley">
+                 
+                 <div class="input"> 
+                    <input type="text" id="answer">
+                    <button class="confirm"> submit </button>
+                </div>
+
+                <p id="free-feedback" class="feedback"></p>
+
+            </section>
+        </div>
+    </body>
+</html>
